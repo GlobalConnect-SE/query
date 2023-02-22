@@ -111,7 +111,34 @@ You can also optionally provide a number of options to modify the query behaviou
 
 ## useMutation
 
+Mutations are used for creating, updating or deleting data. To be able to create mutation you can use the useMutation function. You need to provide:
+
+- A function that handles the creation, updating or deletion of the entity and that returns an observable.
+
+```Typescript
+createMyEntityMutation = useMutation(createMyEntity, {
+  onSuccess(entity) => {},
+  onSuccess(entity) => {},
+  onError(error, context) => {}
+})
+
+createMyEntityMutation.mutate(myEntityData)
+```
+
+In order to actually mutate the data you need to call the mutate method on the Mutation object returned by the useMutation function. The mutate method has the same parameters as the function passed to the useMutation function. This means that you can reuse a mutation for multiple updates by calling the mutate method with the relevant data.
+
 ## Mutation options
+
+By providing callback functions to the mutation you can handle side effects at various states of the mutation process. The available callbacks are:
+
+- `onMutate: ((...args: Targs) => Tcontext) | undefined`
+  - Called when the mutate function is called
+  - Returns a context object which is a user defined object that will be passed to the onError callback
+- `onSuccess: ((data: Tdata) => void) | undefined`
+  - Called when the mutation function has returned successfully
+- `onError: ((error: Terror, context?: Tcontext) => void) | undefined`
+  - Called when the mutation function has returned an error
+  - The context is a user defined object created in the onMutate callback and can be useful for rolling back optimistic updates
 
 <hr />
 
