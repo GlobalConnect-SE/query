@@ -9,7 +9,8 @@
     "check:lint": "eslint -c .eslintrc.js  --ext .ts ./src ./arcgis/src --report-unused-disable-directives",
     "test": "npm run check:types && jest",
     "test:watch": "jest --watch --colors",
-    "test:coverage": "npm run check:types && jest --coverage --colors --no-cache"
+    "test:coverage": "npm run check:types && jest --coverage --colors --no-cache",
+    "publish": "npm run build && npm publish ./dist/query --access public"
   },
   "devDependencies": {
     "@angular/animations": "15.1.5",
