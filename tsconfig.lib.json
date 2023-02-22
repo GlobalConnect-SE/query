@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/lib",
+    "inlineSources": true,
+    "importHelpers": true
+  },
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "strictInjectionParameters": true,
+    "enableResourceInlining": true,
+    "compilationMode": "partial"
+  },
+  "exclude": ["**/*.spec.ts", "**/__fixtures__/*", "dist/*"]
+}

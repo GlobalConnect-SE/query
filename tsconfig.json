@@ -1,0 +1,21 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "ES2020",
+    "target": "ES2020",
+    "lib": ["ES2020", "dom"],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "typeRoots": ["node_modules/@types"],
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "useDefineForClassFields": false
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "@globalconnect/query",
+  "version": "1.0.0",
+  "scripts": {
+    "ng": "ng",
+    "build": "ng build",
+    "check:format": "prettier --config ./.prettierrc --check \"query/**/*{.ts,.js,.json,.css,.scss,.html}\"",
+    "check:types": "tsc --noEmit -p ./tsconfig.lib.json && tsc --noEmit -p ./tsconfig.spec.json",
+    "check:lint": "eslint -c .eslintrc.js  --ext .ts ./src ./arcgis/src --report-unused-disable-directives",
+    "test": "npm run check:types && jest",
+    "test:watch": "jest --watch --colors",
+    "test:coverage": "npm run check:types && jest --coverage --colors --no-cache"
+  },
+  "devDependencies": {
+    "@angular/animations": "15.1.5",
+    "@angular/cdk": "15.1.5",
+    "@angular/common": "15.1.5",
+    "@angular/compiler": "15.1.5",
+    "@angular/core": "15.1.5",
+    "@angular/forms": "15.1.5",
+    "@angular/platform-browser-dynamic": "15.1.5",
+    "@angular/platform-browser": "15.1.5",
+    "@angular/router": "15.1.5",
+    "@types/jest": "29.4.0",
+    "@types/node": "18.14.0",
+    "@types/uuid": "9.0.1",
+    "eslint-plugin-import": "2.27.5",
+    "eslint": "8.34.0",
+    "jest-preset-angular": "13.0.0",
+    "jest": "29.4.3",
+    "ng-packagr": "15.2.2",
+    "prettier": "2.8.2",
+    "rxjs": "7.8.0",
+    "typescript": "4.9.5"
+  },
+  "peerDependencies": {
+    "@angular/animations": "^15.1.5",
+    "@angular/cdk": "^15.1.5",
+    "@angular/common": "^15.1.5",
+    "@angular/compiler": "^15.1.5",
+    "@angular/core": "^15.1.5",
+    "@angular/forms": "^15.1.5",
+    "@angular/platform-browser-dynamic": "^15.1.5",
+    "@angular/platform-browser": "^15.1.5",
+    "@angular/router": "^15.1.5",
+    "uuid": "^9.0.0"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+      "<rootDir>/test-setup.ts"
+    ],
+    "collectCoverageFrom": [
+      "**/lib/**/*.ts",
+      "!**/**module.ts",
+      "!**/__fixtures__/**",
+      "!**/lib/**/index.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 99,
+        "branches": 96,
+        "functions": 97,
+        "lines": 99
+      }
+    },
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist/"
+    ]
+  }
+}
