@@ -1,0 +1,28 @@
+name: 'PR workflow - run tests'
+
+on: [pull_request]
+
+jobs:
+  test:
+    name: 'Test'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'npm'
+
+      - name: 'Cache Node Modules'
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('package-lock.json') }}
+
+      - name: 'Install dependencies'
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: 'Run unit tests'
+        run: npm run test
