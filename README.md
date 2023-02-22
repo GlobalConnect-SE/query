@@ -64,6 +64,16 @@ The useQuery function returns a Query object which includes methods for getting 
 }
 ```
 
+## Query keys
+
+A query key represents a unique entry in the cache. A query key can either be a static string or a tuple of a static string and a value. The second value can be anything including an observable. If the second value is an observable, the key will be updated dynamically when the observable emits.
+
+```Typescript
+const myQuery = useQuery('my-key', fetchMyData)
+const myQuery = useQuery(['my-key', 123], fetchMyData)
+const myQuery = useQuery(['my-key', myKey$], fetchMyData)
+```
+
 ## Query options
 
 You can also optionally provide a number of options to modify the query behaviour.
@@ -163,6 +173,24 @@ setGlobalQueryOptions({ retry: 3, cacheTime: 60, staleTime: 60 })
 
 <hr />
 
+## Testing
+
+When writing unit tests you often want to ensure that tests are isolated. Since useQuery utilizes a shared cache, we need to either clear the cache between tests or by having unique keys to avoid cache hits and cached data from previous tests.
+
+Example with jest
+
+```Typescript
+// test-setup.ts
+setGlobalQueryOptions({ retry: 3, cacheTime: 60, staleTime: 60 })
+
+// OR
+
+//component.spec.ts
+beforeEach(() => {
+  clearQueryCache()
+})
+```
+
 ## Examples
 
 ### Optimistic updates
@@ -201,7 +229,7 @@ const updatePersonNameMutation = useMutation(this.updatePersonName, {
 You can use placeholder data to show non-persisted data during the initial load. In the example below we are using sparse data to be able to show partial information about the person while loading.
 
 ```Typescript
-  const personQuery = useQuery(['person', this.selectedPersonId$], this.fetchPerson, {
+const personQuery = useQuery(['person', this.selectedPersonId$], this.fetchPerson, {
     placeholderData: (selectedPersonId): Partial<Person> =>
       getQueryData<SparsePerson[]>('sparsePersons')?.find(
         (sparsePerson) => sparsePerson.id === selectedPersonId
@@ -218,5 +246,16 @@ Windows focus refetching can be used to refetch some important data in the backg
 const statusQuery = useQuery('status', this.fetchStatus, {
   staleTime: 3,
   refetchOnWindowFocus: true,
-})
+});
+```
+
+### Pagination
+
+Paginated requests can be easily handled with a dynamic query key and the keepPreviousData query option. The keepPreviousData option enables us to keep displaying the number of pages while fetching the some other page.
+
+```Typescript
+const paginationVariables = of({page: 0, pageSize: 10});
+const paginatedDataQuery = useQuery(['paginatedData', paginationVariables$], this.fetchPaginatedData, {
+  keepPreviousData: true
+});
 ```
