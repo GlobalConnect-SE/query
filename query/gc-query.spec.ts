@@ -703,8 +703,9 @@ describe('GcQuery', () => {
       onMutate: onMutateFn,
     });
 
-    mutation.mutate(1);
-    expect(onMutateFn).toHaveBeenCalledWith(1);
+    const mockRequest = 1;
+    mutation.mutate(mockRequest);
+    expect(onMutateFn).toHaveBeenCalledWith([mockRequest]);
   });
 
   it('should call onSuccess callback function when mutating', () => {
@@ -714,8 +715,22 @@ describe('GcQuery', () => {
       onSuccess: onSuccessFn,
     });
 
-    mutation.mutate(1);
-    expect(onSuccessFn).toHaveBeenCalledWith(1);
+    const mockRequest = 1;
+    mutation.mutate(mockRequest);
+    expect(onSuccessFn).toHaveBeenCalledWith(1, [mockRequest], undefined);
+  });
+
+  it('should call onSuccess callback function with multiple args', () => {
+    const mutationFn = jest.fn((arg: number, arg2: string) => of(arg));
+    const onSuccessFn = jest.fn();
+    const mutation = useMutation(mutationFn, {
+      onSuccess: onSuccessFn,
+    });
+
+    const request: Parameters<typeof mutationFn> = [1, '2'];
+
+    mutation.mutate(...request);
+    expect(onSuccessFn).toHaveBeenCalledWith(1, request, undefined);
   });
 
   it('should call onError callback function when mutating', () => {
@@ -727,8 +742,9 @@ describe('GcQuery', () => {
       onError: onErrorFn,
     });
 
-    mutation.mutate(1);
-    expect(onErrorFn).toHaveBeenCalledWith(error, undefined);
+    const mockRequest = 1;
+    mutation.mutate(mockRequest);
+    expect(onErrorFn).toHaveBeenCalledWith(error, [mockRequest], undefined);
   });
 
   it('should call onError callback function with context when available and when mutating ', () => {
@@ -741,7 +757,8 @@ describe('GcQuery', () => {
       onMutate: () => 'context',
     });
 
-    mutation.mutate(1);
-    expect(onErrorFn).toHaveBeenCalledWith(error, 'context');
+    const mockRequest = 1;
+    mutation.mutate(mockRequest);
+    expect(onErrorFn).toHaveBeenCalledWith(error, [mockRequest], 'context');
   });
 });
