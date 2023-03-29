@@ -10,7 +10,7 @@
     "test": "npm run check:types && jest",
     "test:watch": "jest --watch --colors",
     "test:coverage": "npm run check:types && jest --coverage --colors --no-cache",
-    "publish": "npm run build && npm publish ./dist/query --access public"
+    "ci:publish": "npm run build && npm publish ./dist/query --access public"
   },
   "devDependencies": {
     "@angular-eslint/eslint-plugin": "^15.2.1",
