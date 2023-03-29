@@ -7,7 +7,13 @@ import {
   getSuccessMutationLoadingState,
 } from './mutation-helpers';
 import { MutationLoadingState } from './mutation-loading-state';
-import { MutationConfig, MutationFn } from './mutation-types';
+import {
+  MutationConfig,
+  MutationFn,
+  OnErrorFn,
+  OnMutateFn,
+  OnSuccessFn,
+} from './mutation-types';
 
 export class Mutation<
   Tdata,
@@ -15,9 +21,9 @@ export class Mutation<
   Terror = HttpErrorResponse,
   Tcontext = unknown
 > {
-  private onMutate: ((...args: Targs) => Tcontext) | undefined;
-  private onSuccess: ((data: Tdata) => void) | undefined;
-  private onError: ((error: Terror, context?: Tcontext) => void) | undefined;
+  private onMutate: OnMutateFn<Targs, Tcontext> | undefined;
+  private onSuccess: OnSuccessFn<Tdata, Targs, Tcontext> | undefined;
+  private onError: OnErrorFn<Terror, Targs, Tcontext> | undefined;
   private mutationFn: MutationFn<Tdata, Targs>;
   private state: BehaviorSubject<MutationLoadingState<Tdata, Terror>>;
 
@@ -36,17 +42,17 @@ export class Mutation<
   mutate(...mutationArgs: Targs) {
     this.setMutationLoadingState();
 
-    const context = this.onMutate?.(...mutationArgs);
+    const context = this.onMutate?.(mutationArgs);
     this.mutationFn(...mutationArgs)
       .pipe(first())
       .subscribe({
         next: (response) => {
           this.handleMutationSuccessResponse(response);
-          this.onSuccess?.(response);
+          this.onSuccess?.(response, mutationArgs, context);
         },
         error: (error: Terror) => {
           this.handleMutationErrorResponse(error);
-          this.onError?.(error, context);
+          this.onError?.(error, mutationArgs, context);
         },
       });
   }
