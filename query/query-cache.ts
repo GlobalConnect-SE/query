@@ -29,6 +29,7 @@ interface AddQueryConfig<Tdata = unknown, Terror = unknown> {
 
 export class QueryCache {
   private cache: Record<string, BehaviorSubject<CachedQuery<any, any>>> = {};
+  private invalidationQueue = new Set<string>();
 
   add({
     queryHash,
@@ -139,6 +140,13 @@ export class QueryCache {
     }
   }
 
+  consumeInvalidation(queryHash: string) {
+    const shouldBeInvalidated = this.invalidationQueue.has(queryHash);
+    this.invalidationQueue.delete(queryHash);
+
+    return shouldBeInvalidated;
+  }
+
   private invalidateQuery<Tdata = unknown, Terror = unknown>(
     queryHash: string
   ) {
@@ -146,8 +154,13 @@ export class QueryCache {
       this.cache[queryHash];
 
     if (cachedQuery) {
+      this.markHashForInvalidation(queryHash);
       this.setQuery(queryHash, { ...cachedQuery.value.loadingState }, false);
     }
+  }
+
+  private markHashForInvalidation(queryHash: string) {
+    this.invalidationQueue.add(queryHash);
   }
 
   invalidateQueries = (queryHash: string) => {

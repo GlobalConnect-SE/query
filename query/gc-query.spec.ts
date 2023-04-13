@@ -6,11 +6,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import {
   BehaviorSubject,
+  Subject,
   delay,
   first,
   firstValueFrom,
   of,
-  Subject,
   take,
   throwError,
 } from 'rxjs';
@@ -582,6 +582,28 @@ describe('GcQuery', () => {
       const queryFn = jest.fn(() => of('data'));
       const queryFn2 = jest.fn(() => of('data'));
 
+      useQuery('test_key', queryFn).getState$().subscribe();
+      useQuery(['test_key', 1], queryFn).getState$().subscribe();
+      useQuery('another_key', queryFn2).getState$().subscribe();
+
+      invalidateQueries('test_key');
+
+      tick(150);
+
+      expect(queryFn).toHaveBeenCalledTimes(4);
+      expect(queryFn2).toHaveBeenCalledTimes(1);
+
+      jest.clearAllMocks();
+    }));
+
+    it('should only refetch the same key once when there are multiple active queries with the same key', fakeAsync(() => {
+      const queryFn = jest.fn(() => of('data'));
+      const queryFn2 = jest.fn(() => of('data'));
+
+      useQuery('test_key', queryFn).getState$().subscribe();
+      useQuery('test_key', queryFn).getState$().subscribe();
+      useQuery('test_key', queryFn).getState$().subscribe();
+      useQuery('test_key', queryFn).getState$().subscribe();
       useQuery('test_key', queryFn).getState$().subscribe();
       useQuery(['test_key', 1], queryFn).getState$().subscribe();
       useQuery('another_key', queryFn2).getState$().subscribe();
