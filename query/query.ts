@@ -322,8 +322,10 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
         }),
         delay(INVALIDATION_REFETCH_DELAY)
       )
-      .subscribe(() => {
-        this.refetch();
+      .subscribe(([cachedQuery]) => {
+        if (this.queryCache.consumeInvalidation(cachedQuery.queryHash)) {
+          this.refetch();
+        }
       });
   }
 
