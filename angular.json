@@ -19,7 +19,6 @@
       }
     }
   },
-  "defaultProject": "query",
   "cli": {
     "analytics": false
   }
