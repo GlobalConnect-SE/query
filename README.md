@@ -16,6 +16,14 @@ Utils for automatic caching, state handling and mutation of data. Easy to use an
 
 <hr />
 
+## Release workflow
+
+1. Make a PR with you changes
+2. Get it reviewed and then merge it
+3. Create a new release using the web interface
+4. When creating a new release you can specify the new release tag
+5. This will run the tag-action which will publish the package to npm
+
 ## Table of Contents
 
 - [Features](#features)
