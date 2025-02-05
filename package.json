@@ -13,24 +13,25 @@
     "ci:publish": "npm run build && npm publish ./dist/query --access public"
   },
   "devDependencies": {
-    "@angular-eslint/eslint-plugin": "18.1.0",
-    "@angular/cli": "18.0.4",
-    "@angular/common": "18.0.5",
-    "@angular/compiler": "18.0.5",
-    "@angular/compiler-cli": "18.0.5",
-    "@angular/core": "18.0.5",
+    "@angular-eslint/eslint-plugin": "19.0.2",
+    "@angular/build": "19.1.5",
+    "@angular/cli": "19.1.5",
+    "@angular/common": "19.1.4",
+    "@angular/compiler": "19.1.4",
+    "@angular/compiler-cli": "19.1.4",
+    "@angular/core": "19.1.4",
     "@types/jest": "29.5.1",
-    "@types/node": "18.16.16",
+    "@types/node": "22.9.0",
     "@types/uuid": "9.0.1",
     "@typescript-eslint/eslint-plugin": "7.13.1",
     "eslint": "8.57.0",
     "eslint-plugin-import": "2.27.5",
     "jest": "29.5.0",
-    "jest-preset-angular": "14.1.0",
-    "ng-packagr": "18.0.0",
+    "jest-preset-angular": "14.5.1",
+    "ng-packagr": "19.1.2",
     "prettier": "2.8.8",
     "rxjs": "7.8.1",
-    "typescript": "5.4.5"
+    "typescript": "5.7.3"
   },
   "peerDependencies": {
     "uuid": "^9.0.0"
