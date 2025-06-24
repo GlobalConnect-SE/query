@@ -1,5 +1,5 @@
 # GlobalConnect Query
-hej
+
 Angular library inspired by [Tanstack/query](https://github.com/tanstack/query).
 
 Utils for automatic caching, state handling and mutation of data. Easy to use and configurable for common use cases and automatic garbage collection.
