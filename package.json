@@ -14,12 +14,12 @@
   },
   "devDependencies": {
     "@angular-eslint/eslint-plugin": "19.0.2",
-    "@angular/build": "19.1.5",
-    "@angular/cli": "19.1.5",
-    "@angular/common": "19.1.4",
-    "@angular/compiler": "19.1.4",
-    "@angular/compiler-cli": "19.1.4",
-    "@angular/core": "19.1.4",
+    "@angular/build": "20.0.3",
+    "@angular/cli": "20.0.3",
+    "@angular/common": "20.0.4",
+    "@angular/compiler": "20.0.4",
+    "@angular/compiler-cli": "20.0.4",
+    "@angular/core": "20.0.4",
     "@types/jest": "29.5.1",
     "@types/node": "22.9.0",
     "@types/uuid": "9.0.1",
@@ -27,14 +27,15 @@
     "eslint": "8.57.0",
     "eslint-plugin-import": "2.27.5",
     "jest": "29.5.0",
-    "jest-preset-angular": "14.5.1",
-    "ng-packagr": "19.1.2",
+    "jest-preset-angular": "14.6.0",
+    "ng-packagr": "20.0.1",
     "prettier": "2.8.8",
     "rxjs": "7.8.1",
-    "typescript": "5.7.3"
+    "typescript": "5.8.3",
+    "zone.js": "0.15.1"
   },
   "peerDependencies": {
-    "uuid": "^9.0.0"
+    "uuid": "9.0.0"
   },
   "jest": {
     "preset": "jest-preset-angular",
