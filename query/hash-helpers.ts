@@ -19,7 +19,7 @@ function stableValueHash(value: any): string {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return result;
           }, {} as any)
-      : val
+      : val,
   );
 }
 

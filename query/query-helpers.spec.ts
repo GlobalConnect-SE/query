@@ -140,7 +140,7 @@ describe('QueryHelpers', () => {
           hasBeenFetched: true,
           fetchOnMount: true,
           isCacheStale: false,
-        })
+        }),
       ).toBe(false);
     });
   });
@@ -192,7 +192,7 @@ describe('QueryHelpers', () => {
   describe('getLoadingQueryLoadingState', () => {
     it('should return a loading query loading state', () => {
       expect(
-        getLoadingQueryLoadingState({ data: 1, isPlaceholderData: true })
+        getLoadingQueryLoadingState({ data: 1, isPlaceholderData: true }),
       ).toStrictEqual({
         isLoading: true,
         isSuccess: false,

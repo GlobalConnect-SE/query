@@ -10,7 +10,7 @@ describe('HashHelpers', () => {
     it('should return a query hash when a key and query param is provided', () => {
       const queryHash = hashQueryKey('test_key', { test: 'test123' });
       expect(queryHash).toBe(
-        `test_key${DYNAMIC_HASH_PART_KEY}{"test":"test123"}`
+        `test_key${DYNAMIC_HASH_PART_KEY}{"test":"test123"}`,
       );
     });
 

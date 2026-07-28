@@ -28,13 +28,13 @@ export function useQuery<
   Tdata,
   Targ,
   Terror = HttpErrorResponse,
-  TplaceholderData = Tdata
+  TplaceholderData = Tdata,
 >(
   queryKey: QueryKey<Targ>,
   queryFn: QueryFn<Tdata, Targ>,
   queryOptions: Partial<
     QueryOptions<Tdata, Terror, Targ, TplaceholderData>
-  > = {}
+  > = {},
 ): Query<Tdata, Terror, Targ, TplaceholderData> {
   const { key, queryParam } = getQueryKeyParts(queryKey);
 
@@ -58,10 +58,10 @@ export function useMutation<
   Tdata,
   Targ extends unknown[],
   Terror = HttpErrorResponse,
-  Tcontext = Tdata
+  Tcontext = Tdata,
 >(
   mutationFn: MutationFn<Tdata, Targ>,
-  mutationOptions: MutationOptions<Tdata, Terror, Targ, Tcontext> = {}
+  mutationOptions: MutationOptions<Tdata, Terror, Targ, Tcontext> = {},
 ): Mutation<Tdata, Targ, Terror, Tcontext> {
   return new Mutation<Tdata, Targ, Terror, Tcontext>({
     mutationFn,
@@ -75,7 +75,7 @@ export function useMutation<
  * @returns Observable of the query loading state represented by the key
  */
 export function getQueryData$<Tdata, Targ = unknown>(
-  queryKey: StaticQueryKey<Targ>
+  queryKey: StaticQueryKey<Targ>,
 ) {
   const queryHash = getStaticQueryKeyHash(queryKey);
 
@@ -90,7 +90,7 @@ export function getQueryData$<Tdata, Targ = unknown>(
  * @returns Snapshot of current query data
  */
 export function getQueryData<Tdata, Targ = unknown>(
-  queryKey: StaticQueryKey<Targ>
+  queryKey: StaticQueryKey<Targ>,
 ) {
   const queryHash = getStaticQueryKeyHash(queryKey);
   return queryCache.getOnce<Tdata>(queryHash)?.loadingState?.data;
@@ -98,7 +98,7 @@ export function getQueryData<Tdata, Targ = unknown>(
 
 export function setQueryData<Tinput, Toutput = Tinput, Targ = unknown>(
   queryKey: StaticQueryKey<Targ>,
-  updater: Updater<Tinput, Toutput>
+  updater: Updater<Tinput, Toutput>,
 ) {
   const queryHash = getStaticQueryKeyHash(queryKey);
   queryCache.updateData(queryHash, updater);

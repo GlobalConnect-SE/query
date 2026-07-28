@@ -15,7 +15,7 @@ export function setGlobalQueryOptions(options: Partial<GlobalQueryOptions>) {
 }
 
 export function getQueryOptions<Tdata, Terror, Targ, TplaceholderData>(
-  specificOptions: Partial<QueryOptions<Tdata, Terror, Targ, TplaceholderData>>
+  specificOptions: Partial<QueryOptions<Tdata, Terror, Targ, TplaceholderData>>,
 ) {
   return {
     ...defaultQueryOptions,

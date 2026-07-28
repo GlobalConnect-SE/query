@@ -53,7 +53,7 @@ export class QueryCache {
   setQuery<Tdata, Terror>(
     queryHash: string,
     loadingState: CachedQueryLoadingState<Tdata, Terror>,
-    valid = true
+    valid = true,
   ) {
     if (this.cache[queryHash]) {
       const currentValue = this.cache[queryHash].value;
@@ -78,7 +78,7 @@ export class QueryCache {
 
   updateData<Tinput, Toutput>(
     queryHash: string,
-    updater: Updater<Tinput, Toutput>
+    updater: Updater<Tinput, Toutput>,
   ) {
     const prevData = this.cache[queryHash]?.value.loadingState.data;
     const data = functionalUpdate(updater, prevData);
@@ -89,7 +89,7 @@ export class QueryCache {
   getOrAdd<Tdata = unknown, Terror = unknown>(
     queryHash: string,
     initialData?: Tdata,
-    cacheTime?: number
+    cacheTime?: number,
   ): Observable<CachedQuery<Tdata, Terror>> {
     const cachedQuery =
       this.cache[queryHash] ??
@@ -111,12 +111,12 @@ export class QueryCache {
         if (!cachedQuery.observed) {
           this.queueGarbageCollection(queryHash, cachedQuery.value.cacheTime);
         }
-      })
+      }),
     );
   }
 
   getOnce<Tdata = unknown, Terror = unknown>(
-    queryHash: string
+    queryHash: string,
   ): CachedQuery<Tdata, Terror> | undefined {
     return this.cache[queryHash]?.value;
   }
@@ -148,7 +148,7 @@ export class QueryCache {
   }
 
   private invalidateQuery<Tdata = unknown, Terror = unknown>(
-    queryHash: string
+    queryHash: string,
   ) {
     const cachedQuery: BehaviorSubject<CachedQuery<Tdata, Terror>> | undefined =
       this.cache[queryHash];
@@ -175,7 +175,7 @@ export class QueryCache {
   private getHashesByStaticKey(queryHash: string) {
     const cacheKeys = Object.keys(this.cache);
     return cacheKeys.filter(
-      (cacheKey) => cacheKey.split(DYNAMIC_HASH_PART_KEY)[0] === queryHash
+      (cacheKey) => cacheKey.split(DYNAMIC_HASH_PART_KEY)[0] === queryHash,
     );
   }
 
@@ -197,7 +197,7 @@ export class QueryCache {
 
           cachedQuery.complete();
           delete this.cache[queryHash];
-        })
+        }),
       )
       .subscribe();
   }

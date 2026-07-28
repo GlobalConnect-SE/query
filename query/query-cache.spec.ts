@@ -62,7 +62,7 @@ describe('QueryCache', () => {
     it('should invalidate all queries with the same static key as the provided key', () => {
       const staticKey = 'static_key_part';
       const queryKeys = [1, 2, 3].map((val) =>
-        hashQueryKey(staticKey, of(val))
+        hashQueryKey(staticKey, of(val)),
       );
       queryKeys.map((queryKey, i) => cache.getOrAdd(queryKey, i));
       cache.getOrAdd('some_other_query', 5);
@@ -72,7 +72,7 @@ describe('QueryCache', () => {
       const queryDataArr = queryKeys.map((queryKey) => cache.getOnce(queryKey));
 
       expect(
-        queryDataArr.every((cachedQuery) => cachedQuery?.valid === false)
+        queryDataArr.every((cachedQuery) => cachedQuery?.valid === false),
       ).toBe(true);
       expect(cache.getOnce('some_other_query')?.valid).toBe(true);
     });
@@ -83,7 +83,7 @@ describe('QueryCache', () => {
       cache.getOrAdd('test_key', 'my data');
 
       expect(cache.getOnce('test_key')?.loadingState).toStrictEqual(
-        getCachedSuccessQueryLoadingState('my data')
+        getCachedSuccessQueryLoadingState('my data'),
       );
     });
 
@@ -97,7 +97,7 @@ describe('QueryCache', () => {
       cache.getOrAdd('test_key', 'my data');
 
       expect(cache.getUpdatedAt('test_key')).toBe(
-        new Date('2023-02-16').getTime()
+        new Date('2023-02-16').getTime(),
       );
     });
 

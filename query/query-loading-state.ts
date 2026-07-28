@@ -86,7 +86,7 @@ export interface QueryRefetchingState<Tdata, Terror = HttpErrorResponse>
 export interface QueryPlaceholderState<
   Tdata,
   Terror = HttpErrorResponse,
-  TplaceholderData = Tdata
+  TplaceholderData = Tdata,
 > extends CachedQueryDataLoadingState<TplaceholderData, Terror>,
     QueryLoadingStateMetadata {
   isPlaceholderData: true;
@@ -121,7 +121,7 @@ export interface UnTouchedState<Tdata, Terror = HttpErrorResponse>
 
 export declare type CachedQueryLoadingState<
   Tdata,
-  Terror = HttpErrorResponse
+  Terror = HttpErrorResponse,
 > =
   | CachedQueryDataLoadingState<Tdata, Terror>
   | CachedQueryRefetchingState<Tdata, Terror>
@@ -132,7 +132,7 @@ export declare type CachedQueryLoadingState<
 export declare type QueryLoadingState<
   Tdata,
   Terror = HttpErrorResponse,
-  TplaceholderData = Tdata
+  TplaceholderData = Tdata,
 > =
   | QueryDataLoadingState<Tdata, Terror>
   | QueryRefetchingState<Tdata, Terror>
