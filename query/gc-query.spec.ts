@@ -5,36 +5,36 @@ jest.mock('uuid', () => ({
 import { HttpErrorResponse } from '@angular/common/http';
 import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import {
-  BehaviorSubject,
-  Subject,
-  delay,
-  first,
-  firstValueFrom,
-  of,
-  take,
-  throwError,
+    BehaviorSubject,
+    Subject,
+    delay,
+    first,
+    firstValueFrom,
+    of,
+    take,
+    throwError,
 } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  clearQueryCache,
-  getQueryData,
-  getQueryData$,
-  invalidateQueries,
-  setQueryData,
-  useMutation,
-  useQuery,
+    clearQueryCache,
+    getQueryData,
+    getQueryData$,
+    invalidateQueries,
+    setQueryData,
+    useMutation,
+    useQuery,
 } from './gc-query';
 import { DYNAMIC_HASH_PART_KEY } from './hash-helpers';
 import { getQueryCache } from './query-cache';
 import {
-  createErrorMutationLoadingState,
-  createInitialMutationLoadingState,
-  createInitialQueryLoadingState,
-  createLoadingMutationLoadingState,
-  createLoadingQueryLoadingState,
-  createRefetchingQueryLoadingState,
-  createSuccessMutationLoadingState,
-  createSuccessQueryLoadingState,
+    createErrorMutationLoadingState,
+    createInitialMutationLoadingState,
+    createInitialQueryLoadingState,
+    createLoadingMutationLoadingState,
+    createLoadingQueryLoadingState,
+    createRefetchingQueryLoadingState,
+    createSuccessMutationLoadingState,
+    createSuccessQueryLoadingState,
 } from './query-testing-utils';
 
 const _uuidv4: any = uuidv4;
@@ -743,7 +743,7 @@ describe('GcQuery', () => {
   });
 
   it('should call onSuccess callback function with multiple args', () => {
-    const mutationFn = jest.fn((arg: number, arg2: string) => of(arg));
+    const mutationFn = jest.fn((arg: number, _arg2: string) => of(arg));
     const onSuccessFn = jest.fn();
     const mutation = useMutation(mutationFn, {
       onSuccess: onSuccessFn,

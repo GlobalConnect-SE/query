@@ -2,20 +2,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { isObservable, Observable, of } from 'rxjs';
 import { hashQueryKey } from './hash-helpers';
 import {
-  CachedQueryLoadingState,
-  CachedQueryLoadingStateMetadata,
-  QueryLoadingState,
-  QueryLoadingStateMetadataWithData,
-  QueryPlaceholderState,
-  QueryRefetchingState,
+    CachedQueryLoadingState,
+    CachedQueryLoadingStateMetadata,
+    QueryLoadingState,
+    QueryLoadingStateMetadataWithData,
+    QueryPlaceholderState,
+    QueryRefetchingState,
 } from './query-loading-state';
 import {
-  DataUpdaterFunction,
-  FetchOnMountOption,
-  LoadingStateCalculationMetadata,
-  QueryKey,
-  StaticQueryKey,
-  Updater,
+    DataUpdaterFunction,
+    FetchOnMountOption,
+    LoadingStateCalculationMetadata,
+    QueryKey,
+    StaticQueryKey,
+    Updater,
 } from './query-types';
 
 export interface ShouldDoRequestParams {
@@ -136,7 +136,7 @@ export function getRefetchingQueryLoadingState<
     isPreviousData: false,
     isRefetching: true,
     isPlaceholderData: false,
-    data: data as Tdata,
+    data: data
   } as QueryRefetchingState<Tdata, Terror>;
 }
 
