@@ -1,24 +1,20 @@
-import { defineConfig } from "eslint/config";
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-import angularEslint from "@angular-eslint/eslint-plugin";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import _import from "eslint-plugin-import";
-import globals from "globals";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+const { defineConfig } = require("eslint/config");
+const { fixupConfigRules, fixupPluginRules } = require("@eslint/compat");
+const angularEslint = require("@angular-eslint/eslint-plugin");
+const typescriptEslint = require("@typescript-eslint/eslint-plugin");
+const importPlugin = require("eslint-plugin-import");
+const globals = require("globals");
+const tsParser = require("@typescript-eslint/parser");
+const js = require("@eslint/js");
+const { FlatCompat } = require("@eslint/eslintrc");
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
     baseDirectory: __dirname,
     recommendedConfig: js.configs.recommended,
     allConfig: js.configs.all
 });
 
-export default defineConfig([{
+module.exports = defineConfig([{
     extends: fixupConfigRules(compat.extends(
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -32,7 +28,7 @@ export default defineConfig([{
     plugins: {
         "@angular-eslint": angularEslint,
         "@typescript-eslint": fixupPluginRules(typescriptEslint),
-        import: fixupPluginRules(_import),
+        import: fixupPluginRules(importPlugin),
     },
 
     languageOptions: {
