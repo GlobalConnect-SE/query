@@ -1,6 +1,6 @@
 {
   "name": "@globalconnect/query",
-  "version": "6.0.1",
+  "version": "7.0.0",
   "scripts": {
     "ng": "ng",
     "build": "ng build",
