@@ -1,26 +1,26 @@
 import { Observable } from 'rxjs';
 
 export type OnMutateFn<Targs extends unknown[], Tcontext> = (
-  args: Targs
+  args: Targs,
 ) => Tcontext;
 
 export type OnSuccessFn<Tdata, Targs extends unknown[], Tcontext> = (
   data: Tdata,
   args: Targs,
-  context?: Tcontext
+  context?: Tcontext,
 ) => void;
 
 export type OnErrorFn<Terror, Targs extends unknown[], Tcontext> = (
   error: Terror,
   args: Targs,
-  context?: Tcontext
+  context?: Tcontext,
 ) => void;
 
 export interface MutationOptions<
   Tdata,
   Terror,
   Targs extends unknown[],
-  Tcontext
+  Tcontext,
 > {
   onMutate?: OnMutateFn<Targs, Tcontext>;
   onSuccess?: OnSuccessFn<Tdata, Targs, Tcontext>;
@@ -35,7 +35,7 @@ export type MutationConfig<
   Tdata,
   Targs extends unknown[],
   Terror,
-  Tcontext = unknown
+  Tcontext = unknown,
 > = {
   options: MutationOptions<Tdata, Terror, Targs, Tcontext>;
   mutationFn: MutationFn<Tdata, Targs>;

@@ -5,36 +5,36 @@ jest.mock('uuid', () => ({
 import { HttpErrorResponse } from '@angular/common/http';
 import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
 import {
-  BehaviorSubject,
-  Subject,
-  delay,
-  first,
-  firstValueFrom,
-  of,
-  take,
-  throwError,
+    BehaviorSubject,
+    Subject,
+    delay,
+    first,
+    firstValueFrom,
+    of,
+    take,
+    throwError,
 } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  clearQueryCache,
-  getQueryData,
-  getQueryData$,
-  invalidateQueries,
-  setQueryData,
-  useMutation,
-  useQuery,
+    clearQueryCache,
+    getQueryData,
+    getQueryData$,
+    invalidateQueries,
+    setQueryData,
+    useMutation,
+    useQuery,
 } from './gc-query';
 import { DYNAMIC_HASH_PART_KEY } from './hash-helpers';
 import { getQueryCache } from './query-cache';
 import {
-  createErrorMutationLoadingState,
-  createInitialMutationLoadingState,
-  createInitialQueryLoadingState,
-  createLoadingMutationLoadingState,
-  createLoadingQueryLoadingState,
-  createRefetchingQueryLoadingState,
-  createSuccessMutationLoadingState,
-  createSuccessQueryLoadingState,
+    createErrorMutationLoadingState,
+    createInitialMutationLoadingState,
+    createInitialQueryLoadingState,
+    createLoadingMutationLoadingState,
+    createLoadingQueryLoadingState,
+    createRefetchingQueryLoadingState,
+    createSuccessMutationLoadingState,
+    createSuccessQueryLoadingState,
 } from './query-testing-utils';
 
 const _uuidv4: any = uuidv4;
@@ -90,14 +90,14 @@ describe('GcQuery', () => {
       const query1 = useQuery('test_key', fetchData, { staleTime: 0.001 });
 
       expect(query1.getStateOnce()).toStrictEqual(
-        createLoadingQueryLoadingState()
+        createLoadingQueryLoadingState(),
       );
 
       tick(100);
 
       const query2 = useQuery('test_key', fetchData, { staleTime: 0.001 });
       expect(query2.getStateOnce()).toStrictEqual(
-        createRefetchingQueryLoadingState(1)
+        createRefetchingQueryLoadingState(1),
       );
 
       discardPeriodicTasks();
@@ -166,14 +166,14 @@ describe('GcQuery', () => {
 
       expect(fetchData).not.toHaveBeenCalled();
       expect(query.getStateOnce()).toStrictEqual(
-        createInitialQueryLoadingState()
+        createInitialQueryLoadingState(),
       );
       query.destroy();
     });
 
     it('should return the placeholder data during the initial load when provided', fakeAsync(() => {
       const fetchData = jest.fn((arg: number) =>
-        of({ title: 'real data', data: arg }).pipe(delay(500))
+        of({ title: 'real data', data: arg }).pipe(delay(500)),
       );
 
       const query = useQuery(['test_key', 1], fetchData, {
@@ -185,13 +185,13 @@ describe('GcQuery', () => {
         createLoadingQueryLoadingState({
           data: { title: 'placeholder data', data: 1 },
           isPlaceholderData: true,
-        })
+        }),
       );
 
       tick(1000);
 
       expect(query.getStateOnce()).toStrictEqual(
-        createSuccessQueryLoadingState({ title: 'real data', data: 1 })
+        createSuccessQueryLoadingState({ title: 'real data', data: 1 }),
       );
 
       discardPeriodicTasks();
@@ -228,7 +228,7 @@ describe('GcQuery', () => {
       query.refetch();
 
       expect(query.getStateOnce()).toStrictEqual(
-        createLoadingQueryLoadingState({ data: 1, isRefetching: true })
+        createLoadingQueryLoadingState({ data: 1, isRefetching: true }),
       );
 
       discardPeriodicTasks();
@@ -262,7 +262,7 @@ describe('GcQuery', () => {
 
     it('should retry fetching the data once when the retry option is true', fakeAsync(() => {
       const fetchData = jest.fn(() =>
-        throwError(() => new HttpErrorResponse({ status: 500 }))
+        throwError(() => new HttpErrorResponse({ status: 500 })),
       );
       useQuery('test_key', fetchData, { retry: true, retryDelay: 5 });
       tick(50);
@@ -275,7 +275,7 @@ describe('GcQuery', () => {
 
     it('should retry fetching the data n times when the retry option is n', fakeAsync(() => {
       const fetchData = jest.fn(() =>
-        throwError(() => new HttpErrorResponse({ status: 500 }))
+        throwError(() => new HttpErrorResponse({ status: 500 })),
       );
       useQuery('test_key', fetchData, { retry: 3, retryDelay: 5 });
       tick(50);
@@ -291,7 +291,7 @@ describe('GcQuery', () => {
       const fetchData = jest.fn((value: string) => {
         if (value === 'value 1') {
           return throwError(
-            () => new HttpErrorResponse({ status: 500, error: value })
+            () => new HttpErrorResponse({ status: 500, error: value }),
           );
         }
 
@@ -394,7 +394,7 @@ describe('GcQuery', () => {
       const fetchData = jest.fn(() => of(1));
       const query = useQuery('test_key', fetchData);
       expect(query.getStateOnce()).toStrictEqual(
-        createSuccessQueryLoadingState(1)
+        createSuccessQueryLoadingState(1),
       );
     });
 
@@ -403,7 +403,7 @@ describe('GcQuery', () => {
       const source1 = of('source value 1');
       const source2 = of('source value 2');
       const fetchData = jest.fn((param) =>
-        param === 1 ? source1 : source2.pipe(delay(1000))
+        param === 1 ? source1 : source2.pipe(delay(1000)),
       );
 
       const query = useQuery(['test_key', dependent$], fetchData, {
@@ -418,12 +418,12 @@ describe('GcQuery', () => {
         createLoadingQueryLoadingState({
           data: 'source value 1',
           isPreviousData: true,
-        })
+        }),
       );
 
       tick(1001);
       expect(query.getStateOnce()).toStrictEqual(
-        createSuccessQueryLoadingState('source value 2')
+        createSuccessQueryLoadingState('source value 2'),
       );
 
       discardPeriodicTasks();
@@ -452,7 +452,7 @@ describe('GcQuery', () => {
 
     it('should invalidate the cache when the query function returns an error', () => {
       const queryFn = jest.fn(() =>
-        throwError(() => new HttpErrorResponse({ status: 500 }))
+        throwError(() => new HttpErrorResponse({ status: 500 })),
       );
 
       useQuery('test_key', queryFn, {
@@ -470,7 +470,7 @@ describe('GcQuery', () => {
       const fetchData = jest.fn(() => of(1));
       const query = useQuery(['test_key', of({ field: 'value' })], fetchData);
       expect(query.getQueryKeyOnce()).toStrictEqual(
-        `test_key${DYNAMIC_HASH_PART_KEY}{"field":"value"}`
+        `test_key${DYNAMIC_HASH_PART_KEY}{"field":"value"}`,
       );
     });
 
@@ -681,39 +681,39 @@ describe('GcQuery', () => {
       mutation.getState$().pipe(take(3)).subscribe();
 
       expect(mutation.getStateOnce()).toStrictEqual(
-        createInitialMutationLoadingState()
+        createInitialMutationLoadingState(),
       );
 
       mutation.mutate(1);
 
       expect(mutation.getStateOnce()).toStrictEqual(
-        createLoadingMutationLoadingState()
+        createLoadingMutationLoadingState(),
       );
 
       tick(100);
 
       expect(mutation.getStateOnce()).toStrictEqual(
-        createSuccessMutationLoadingState(1)
+        createSuccessMutationLoadingState(1),
       );
     }));
 
     it('should handle errors', () => {
       const error = new HttpErrorResponse({ status: 500 });
       const mutationFn = jest.fn((_arg: number) =>
-        throwError(() => error).pipe(delay(100))
+        throwError(() => error).pipe(delay(100)),
       );
 
       const mutation = useMutation(mutationFn);
       mutation.getState$().pipe(take(3)).subscribe();
 
       expect(mutation.getStateOnce()).toStrictEqual(
-        createInitialMutationLoadingState()
+        createInitialMutationLoadingState(),
       );
 
       mutation.mutate(1);
 
       expect(mutation.getStateOnce()).toStrictEqual(
-        createErrorMutationLoadingState(error)
+        createErrorMutationLoadingState(error),
       );
     });
   });
@@ -743,7 +743,7 @@ describe('GcQuery', () => {
   });
 
   it('should call onSuccess callback function with multiple args', () => {
-    const mutationFn = jest.fn((arg: number, arg2: string) => of(arg));
+    const mutationFn = jest.fn((arg: number, _arg2: string) => of(arg));
     const onSuccessFn = jest.fn();
     const mutation = useMutation(mutationFn, {
       onSuccess: onSuccessFn,

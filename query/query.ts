@@ -90,7 +90,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
     }
 
     this.queryParam$ = asObservable(
-      queryConfig.queryParam as Targ | Observable<Targ>
+      queryConfig.queryParam as Targ | Observable<Targ>,
     );
 
     this.state$ = this._getState$();
@@ -100,7 +100,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
   }
 
   private setOptions(
-    options: QueryOptions<Tdata, Terror, Targ, TplaceholderData>
+    options: QueryOptions<Tdata, Terror, Targ, TplaceholderData>,
   ) {
     this.options = options;
     this.onSuccess = options.onSuccess;
@@ -142,7 +142,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
     }
 
     const cachedQueryLoadingState = this.queryCache.getOnce<Tdata, Terror>(
-      this.queryHash$.value
+      this.queryHash$.value,
     )?.loadingState;
 
     return (
@@ -171,7 +171,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
       this.doQueryRequest(queryParam, {
         data: this.lastValue?.data,
         isRefetching: true,
-      })
+      }),
     );
   }
 
@@ -198,7 +198,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
           this.getPreviousCachedQuery$(previousQueryHash),
           this.cachedQuery$,
           this.placeholderData$,
-        ])
+        ]),
       ),
       map(([previousCachedQuery, cachedQuery, placeholderData]) => {
         const loadingState = calculateLoadingState({
@@ -211,7 +211,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
         this.lastValue = loadingState;
         return loadingState;
       }),
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
     );
   }
 
@@ -246,7 +246,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
     arg: Targ,
     metaData: Partial<
       QueryLoadingStateMetadataWithData<Tdata | TplaceholderData>
-    > = {}
+    > = {},
   ) {
     const currentQueryHash = this.queryHash$.value;
     this.setLoadingState(currentQueryHash, metaData);
@@ -275,8 +275,8 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
         takeUntil(this.destroy$),
         withLatestFrom(this.queryParam$),
         tap(([, queryParam]) =>
-          this.doQueryRequest(queryParam, { isRefetching: true })
-        )
+          this.doQueryRequest(queryParam, { isRefetching: true }),
+        ),
       )
       .subscribe();
   }
@@ -293,7 +293,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
         take(numberOfRetries),
         takeUntil(this.destroy$),
         withLatestFrom(this.queryParam$),
-        tap(([, queryParam]) => this.doQueryRequest(queryParam))
+        tap(([, queryParam]) => this.doQueryRequest(queryParam)),
       )
       .subscribe();
   }
@@ -320,7 +320,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
           const { hasErrors } = cachedQuery.loadingState;
           return !cachedQuery.valid && !hasErrors && enabled;
         }),
-        delay(INVALIDATION_REFETCH_DELAY)
+        delay(INVALIDATION_REFETCH_DELAY),
       )
       .subscribe(([cachedQuery]) => {
         if (this.queryCache.consumeInvalidation(cachedQuery.queryHash)) {
@@ -339,7 +339,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
 
   private getCachedQuery$() {
     return this.queryHash$.pipe(
-      switchMap((queryHash) => this.getOrAddCachedQuery(queryHash))
+      switchMap((queryHash) => this.getOrAddCachedQuery(queryHash)),
     );
   }
 
@@ -359,13 +359,13 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
 
         return asObservable(this.placeholderData(queryParam));
       }),
-      takeUntil(this.destroy$)
+      takeUntil(this.destroy$),
     );
   }
 
   private setLoadingState(
     queryHash: string,
-    metadata: Partial<QueryLoadingStateMetadataWithData>
+    metadata: Partial<QueryLoadingStateMetadataWithData>,
   ) {
     this.queryCache.setQuery(queryHash, getCachedQueryLoadingState(metadata));
   }
@@ -374,7 +374,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
     this.onSuccess?.(response);
     this.queryCache.setQuery(
       queryHash,
-      getCachedSuccessQueryLoadingState(response)
+      getCachedSuccessQueryLoadingState(response),
     );
   }
 
@@ -385,7 +385,7 @@ export class Query<Tdata, Terror, Targ, TplaceholderData> {
     this.queryCache.setQuery(
       queryHash,
       getCachedErrorLoadingState(error),
-      false
+      false,
     );
   }
 }

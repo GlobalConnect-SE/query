@@ -2,20 +2,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { isObservable, Observable, of } from 'rxjs';
 import { hashQueryKey } from './hash-helpers';
 import {
-  CachedQueryLoadingState,
-  CachedQueryLoadingStateMetadata,
-  QueryLoadingState,
-  QueryLoadingStateMetadataWithData,
-  QueryPlaceholderState,
-  QueryRefetchingState,
+    CachedQueryLoadingState,
+    CachedQueryLoadingStateMetadata,
+    QueryLoadingState,
+    QueryLoadingStateMetadataWithData,
+    QueryPlaceholderState,
+    QueryRefetchingState,
 } from './query-loading-state';
 import {
-  DataUpdaterFunction,
-  FetchOnMountOption,
-  LoadingStateCalculationMetadata,
-  QueryKey,
-  StaticQueryKey,
-  Updater,
+    DataUpdaterFunction,
+    FetchOnMountOption,
+    LoadingStateCalculationMetadata,
+    QueryKey,
+    StaticQueryKey,
+    Updater,
 } from './query-types';
 
 export interface ShouldDoRequestParams {
@@ -51,7 +51,7 @@ export function shouldDoRequest({
 
 export function getInitialQueryLoadingState<
   Tdata,
-  Terror = HttpErrorResponse
+  Terror = HttpErrorResponse,
 >(): QueryLoadingState<Tdata, Terror> {
   return {
     hasErrors: false,
@@ -65,7 +65,7 @@ export function getInitialQueryLoadingState<
 }
 
 export function getSuccessQueryLoadingState<Tdata, Terror = HttpErrorResponse>(
-  data: Tdata
+  data: Tdata,
 ): QueryLoadingState<Tdata, Terror> {
   return {
     isLoading: false,
@@ -79,7 +79,7 @@ export function getSuccessQueryLoadingState<Tdata, Terror = HttpErrorResponse>(
 }
 
 export function getErrorQueryLoadingState<Tdata, Terror = HttpErrorResponse>(
-  error: Terror
+  error: Terror,
 ): QueryLoadingState<Tdata, Terror> {
   return {
     isLoading: false,
@@ -95,11 +95,11 @@ export function getErrorQueryLoadingState<Tdata, Terror = HttpErrorResponse>(
 export function getLoadingQueryLoadingState<
   Tdata,
   Terror = HttpErrorResponse,
-  TplaceholderData = Tdata
+  TplaceholderData = Tdata,
 >(
   metadata: Partial<
     QueryLoadingStateMetadataWithData<Tdata | TplaceholderData>
-  > = {}
+  > = {},
 ): QueryLoadingState<Tdata, Terror, TplaceholderData> {
   if (metadata.isPlaceholderData) {
     return {
@@ -127,7 +127,7 @@ export function getLoadingQueryLoadingState<
 export function getRefetchingQueryLoadingState<
   Tdata,
   Terror = HttpErrorResponse,
-  TplaceholderData = Tdata
+  TplaceholderData = Tdata,
 >(data?: Tdata): QueryLoadingState<Tdata, Terror, TplaceholderData> {
   return {
     isLoading: false,
@@ -136,13 +136,13 @@ export function getRefetchingQueryLoadingState<
     isPreviousData: false,
     isRefetching: true,
     isPlaceholderData: false,
-    data: data as Tdata,
+    data: data
   } as QueryRefetchingState<Tdata, Terror>;
 }
 
 export function getCachedInitialQueryLoadingState<
   Tdata,
-  Terror = HttpErrorResponse
+  Terror = HttpErrorResponse,
 >(): CachedQueryLoadingState<Tdata, Terror> {
   return {
     hasErrors: false,
@@ -155,7 +155,7 @@ export function getCachedInitialQueryLoadingState<
 
 export function getCachedSuccessQueryLoadingState<
   Tdata,
-  Terror = HttpErrorResponse
+  Terror = HttpErrorResponse,
 >(data: Tdata): CachedQueryLoadingState<Tdata, Terror> {
   return {
     isLoading: false,
@@ -167,7 +167,7 @@ export function getCachedSuccessQueryLoadingState<
 }
 
 export function getCachedQueryLoadingState<Tdata, Terror = HttpErrorResponse>(
-  metadata: Partial<CachedQueryLoadingStateMetadata<Tdata>>
+  metadata: Partial<CachedQueryLoadingStateMetadata<Tdata>>,
 ): CachedQueryLoadingState<Tdata, Terror> {
   const metadataWithDefaults: CachedQueryLoadingStateMetadata<Tdata> = {
     isRefetching: false,
@@ -184,7 +184,7 @@ export function getCachedQueryLoadingState<Tdata, Terror = HttpErrorResponse>(
 }
 
 export function getCachedErrorLoadingState<Terror = HttpErrorResponse>(
-  error: Terror
+  error: Terror,
 ): CachedQueryLoadingState<unknown, Terror> {
   return {
     isLoading: false,
@@ -198,12 +198,12 @@ export function getCachedErrorLoadingState<Terror = HttpErrorResponse>(
 export function cachedToLoadingState<
   Tdata,
   Terror = HttpErrorResponse,
-  TplaceholderData = Tdata
+  TplaceholderData = Tdata,
 >(
   cachedLoadingState: CachedQueryLoadingState<Tdata, Terror>,
   metadata: Partial<
     QueryLoadingStateMetadataWithData<Tdata | TplaceholderData>
-  > = {}
+  > = {},
 ): QueryLoadingState<Tdata, Terror, TplaceholderData> {
   return {
     isPlaceholderData: false,
@@ -215,7 +215,7 @@ export function cachedToLoadingState<
 
 export function functionalUpdate<Tinput, Toutput>(
   updater: Updater<Tinput, Toutput>,
-  input: Tinput
+  input: Tinput,
 ): Toutput {
   return typeof updater === 'function'
     ? (updater as DataUpdaterFunction<Tinput, Toutput>)(input)
@@ -229,9 +229,9 @@ export function asObservable<Targ>(arg: Targ | Observable<Targ>) {
 export function calculateLoadingState<
   Tdata = unknown,
   Terror = HttpErrorResponse,
-  TplaceholderData = Tdata
+  TplaceholderData = Tdata,
 >(
-  metadata: LoadingStateCalculationMetadata<Tdata, Terror, TplaceholderData>
+  metadata: LoadingStateCalculationMetadata<Tdata, Terror, TplaceholderData>,
 ): QueryLoadingState<Tdata, Terror, TplaceholderData> {
   const { loadingState, previousData, keepPreviousData, placeholderData } =
     metadata;

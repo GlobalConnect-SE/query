@@ -19,7 +19,7 @@ function stableValueHash(value: any): string {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return
             return result;
           }, {} as any)
-      : val
+      : val,
   );
 }
 
@@ -27,8 +27,7 @@ function hasObjectPrototype(o: any): boolean {
   return Object.prototype.toString.call(o) === '[object Object]';
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-function isPlainObject(o: any): o is Object {
+function isPlainObject(o: unknown): o is Record<string, unknown> {
   if (!hasObjectPrototype(o)) {
     return false;
   }

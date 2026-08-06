@@ -3,7 +3,7 @@ import { MutationLoadingState } from './mutation-loading-state';
 
 export function getInitialMutationLoadingState<
   Tdata,
-  Terror
+  Terror,
 >(): MutationLoadingState<Tdata, Terror> {
   return {
     data: undefined,
@@ -16,7 +16,7 @@ export function getInitialMutationLoadingState<
 
 export function getLoadingMutationLoadingState<
   Tdata,
-  Terror = HttpErrorResponse
+  Terror = HttpErrorResponse,
 >(): MutationLoadingState<Tdata, Terror> {
   return {
     data: undefined,
@@ -29,7 +29,7 @@ export function getLoadingMutationLoadingState<
 
 export function getSuccessMutationLoadingState<
   Tdata,
-  Terror = HttpErrorResponse
+  Terror = HttpErrorResponse,
 >(data: Tdata): MutationLoadingState<Tdata, Terror> {
   return {
     data,
@@ -41,7 +41,7 @@ export function getSuccessMutationLoadingState<
 }
 
 export function getErrorMutationLoadingState<Tdata, Terror = HttpErrorResponse>(
-  error: Terror
+  error: Terror,
 ): MutationLoadingState<Tdata, Terror> {
   return {
     data: undefined,

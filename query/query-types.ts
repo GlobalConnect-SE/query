@@ -10,7 +10,7 @@ export type EnableOrForce = boolean | 'force';
 export type FetchOnMountOption = EnableOrForce;
 export type RefetchOnWindowFocusOption = EnableOrForce;
 export type PlaceholderData<Targ, TplaceholderData> = (
-  arg: Targ
+  arg: Targ,
 ) => TplaceholderData;
 
 export interface QueryOptions<Tdata, Terror, Targ, TplaceholderData> {
@@ -62,7 +62,7 @@ export type Updater<Tinput, Toutput> =
 export interface LoadingStateCalculationMetadata<
   Tdata,
   Terror,
-  TplaceholderData
+  TplaceholderData,
 > {
   loadingState: CachedQueryLoadingState<Tdata, Terror>;
   keepPreviousData: boolean;

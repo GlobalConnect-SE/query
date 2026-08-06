@@ -19,7 +19,7 @@ export class Mutation<
   Tdata,
   Targs extends unknown[],
   Terror = HttpErrorResponse,
-  Tcontext = unknown
+  Tcontext = unknown,
 > {
   private onMutate: OnMutateFn<Targs, Tcontext> | undefined;
   private onSuccess: OnSuccessFn<Tdata, Targs, Tcontext> | undefined;
@@ -35,7 +35,7 @@ export class Mutation<
     this.onError = onError;
     this.mutationFn = mutationConfig.mutationFn;
     this.state = new BehaviorSubject(
-      getInitialMutationLoadingState<Tdata, Terror>()
+      getInitialMutationLoadingState<Tdata, Terror>(),
     );
   }
 
